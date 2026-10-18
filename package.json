@@ -1,0 +1,27 @@
+{
+  "name": "ai-assisted-delivery-demo",
+  "version": "1.0.0",
+  "description": "CommerceFlow",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scrumster/ai-assisted-delivery-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/scrumster/ai-assisted-delivery-demo/issues"
+  },
+  "homepage": "https://github.com/scrumster/ai-assisted-delivery-demo#readme",
+  "devDependencies": {
+    "vitest": "^5.0.5"
+  }
+}
