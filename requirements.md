@@ -274,7 +274,7 @@ The application shall tell visitors, in the interface, how cart persistence and 
 ### 7.1 Approach
 - **Automated unit-level tests** (Node.js) cover all business logic. Each gating TC is implemented as one or more individual automated tests, grouped into test suites. Gating tests must pass for a release.
 - **CI checks** confirm that the gating tests run in Node.js on every push and pull request, and that the latest run on the main branch passes.
-- **Manual checklist tests** cover user-interface behaviour, visitor notices, mobile layout, accessibility, publishing checks and repository hygiene. Repository hygiene (TC-052) is run twice: a baseline at the end of Phase 1 and a final run in Phase 3 before public release. Results are recorded in the repository with date, tester and commit.
+- **Manual checklist tests** cover user-interface behaviour, visitor notices, mobile layout, accessibility, publishing checks and repository hygiene. Repository hygiene (TC-052) is run twice: a baseline at the start of Phase 1, before any new application files or commits are pushed, and a final run in Phase 3 before public release. Results are recorded in the repository with date, tester and commit.
 - **Optional tests** (currently one statistical test, TC-060) run separately and never gate a release.
 - **Counting rule.** Counts in project documents refer to planned test cases (TC IDs) unless stated otherwise. Counts of individual tests and suites are quoted only from real run output after the tests exist. No count is quoted as a result before a run.
 - Unit tests use their own small fixture catalogue, so editing the sample catalogue does not break them. TC-001 separately validates the real sample catalogue.
@@ -358,10 +358,16 @@ The full list is in `docs/assumptions-and-limitations.md` (L-01 onwards) and is 
 All requirements and all 13 acceptance criteria stay in force. This plan only sequences the work. A phase starts when the previous phase's exit criteria are recorded in the traceability matrix evidence log.
 
 ### Phase 1: Business logic and unit tests (no user interface)
-- **Scope:** logic for FR-002 to FR-005, FR-008, FR-010 to FR-015, FR-016 (storage behind a replaceable interface), FR-017 (codes and messages as data), FR-018, and order creation for FR-006 and FR-007. Also: a README with test instructions; a `.gitignore` that excludes environment and credential files, in place before any application files are committed; a free secrets-scanning tool chosen and run before any further commits are pushed (the repository is already public); and the CI workflow running the gating tests (NFR-005, NFR-006, NFR-007, NFR-012).
-- **Tests:** all gating unit-level TCs, the CI checks TC-040 and TC-051, TC-052 (first run, the baseline), TC-057, and optionally TC-060.
-- **Repository hygiene baseline (TC-052, first run):** at the end of Phase 1 the scan covers the working tree and, where the chosen tool supports it, the full commit history. A manual review confirms no `.env` or credential files and no personal data. The tool, its scope and the result are recorded against a commit. Because the repository is public, any finding is treated as already exposed. The credential is revoked or replaced at its source, then removed from the repository, and the scan is re-run before Phase 2 starts. Removing it from later commits alone is not sufficient.
-- **Exit:** all gating tests pass locally and in CI, and the TC-052 baseline reports 0 findings, with evidence recorded against a commit.
+- **First action: repository hygiene baseline (TC-052, Run 1).** The GitHub repository is already public, so the first secrets scan and manual repository hygiene review are completed before any new application files or commits are pushed. In this order:
+  1. Create the `.gitignore` locally, excluding environment and credential files. It is in place before any application files are committed.
+  2. Choose a free secrets-scanning tool.
+  3. Run the scan over the working tree and, where the chosen tool supports it, the full commit history. Complete a manual review confirming no `.env` or credential files and no personal data.
+  4. Record the actual tool, its scope, the result and the commit that was scanned in the evidence log.
+  5. Push only after the scan and review are complete and recorded with 0 findings.
+  - If a credential is found, it is treated as exposed. It is revoked or replaced at its source, removed from the repository, and the scan is re-run and recorded before any further changes are pushed. Removing it from later commits alone is not sufficient.
+- **Scope:** logic for FR-002 to FR-005, FR-008, FR-010 to FR-015, FR-016 (storage behind a replaceable interface), FR-017 (codes and messages as data), FR-018, and order creation for FR-006 and FR-007. Also: a README with test instructions, and the CI workflow running the gating tests (NFR-005, NFR-006, NFR-007, NFR-012). The `.gitignore` and the baseline scan are covered by the first action above.
+- **Tests:** all gating unit-level TCs, the CI checks TC-040 and TC-051, TC-052 (Run 1, the baseline, completed before any push), TC-057, and optionally TC-060.
+- **Exit:** all gating tests pass locally and in CI, and the TC-052 baseline (Run 1) is recorded with 0 findings, with evidence recorded against a commit.
 
 ### Phase 2: Storefront
 - **Scope:** catalogue display (FR-001), cart and checkout screens (FR-002, FR-006, FR-007), validation messages (FR-017), browser-storage wiring (FR-016), visitor notices (FR-019), money formatting (FR-013), responsive layout and basic accessibility (NFR-003, NFR-009, NFR-010).

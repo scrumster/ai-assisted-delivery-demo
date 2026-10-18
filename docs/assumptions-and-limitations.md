@@ -42,7 +42,7 @@ These are published in the engineering showcase (FR-009, NFR-011, RAC-010).
 | L-08 | **No real commerce features.** No payment, authentication, shipping, tax, discounts or currency conversion. | The demo cannot be used for real sales. |
 | L-09 | **No security testing.** Release 1 has had no penetration test, rate limiting or formal threat model. | The application must not be used for real customer data. |
 | L-10 | **Accessibility is basic.** Release 1 meets the checks in NFR-010 only. It is not a formal accessibility audit. | Some accessibility issues may remain. |
-| L-11 | **Test evidence has limited scope.** The revised row improves the description of automated and manual testing, but it drops the original consequence: evidence applies only to the recorded commit and date. That qualification is important and should remain.|
+| L-11 | **Test evidence has limited scope.** Automated functional tests cover business logic; interface, mobile and publishing checks are manual. | Results apply to the recorded commit and date only. Browser-based UI automation is not part of Release 1. |
 | L-12 | **Free hosting has no service guarantee, and its terms and limits can change.** | Availability depends on the free provider. Checklist results record the date they were verified and may go out of date. |
 | L-13 | **Publishing is not automatically tied to CI results.** Git-connected hosts normally deploy on push. | Without a rule, a commit could be published before its tests pass. The release rule (requirements Section 12) and checklist item H-12 address this. |
 
@@ -63,7 +63,7 @@ Complete before Phase 3 publishing. Record the result, date and person for each 
 | H-9 | The address opens in a private window with no login and no access gate (NFR-002) | Private-window test | |
 | H-10 | No custom domain is needed or purchased | Dashboard | |
 | H-11 | Free-tier terms and acceptable-use rules reviewed for a demo site | Cloudflare terms. Record the review date. | |
-| H-12 | The proposed wording describes what H-12 should require rather than stating what must be checked. H-12 is a verification checklist row, so it needs a concise check and a concrete verification method. |
+| H-12 | A verified release gate prevents changes from reaching the production branch before CI passes | Configure a required GitHub Actions status check for `main`. Verify that a failing check blocks a merge. If this cannot be enforced, document the alternative release control and its limitations. Record the decision and verify it works in Phase 3. | |
 
 ## 4. Statements the Project Will Not Make
 
