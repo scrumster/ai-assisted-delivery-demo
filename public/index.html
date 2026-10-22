@@ -82,6 +82,47 @@
       </div>
     </section>
 
+    <section class="section" id="checkout-workflow">
+      <p class="eyebrow">HOW IT WORKS · ILLUSTRATIVE EXAMPLE</p>
+      <h2>From checkout idea to verifiable delivery.</h2>
+      <p class="section-intro">Business goal: enable a customer to complete a purchase successfully. Here's how AI can help turn that goal into delivery artefacts that a team can review and verify.</p>
+
+      <div class="journey-grid">
+        <article class="journey-card">
+          <span>STEP 01 · DISCOVER</span>
+          <h3>Define the outcome</h3>
+          <p><strong>Business idea:</strong> A customer can review their cart, provide the required checkout details and place an order.</p>
+          <p><strong>Human decision:</strong> Confirm the intended customer experience, business rules and scope.</p>
+        </article>
+
+        <article class="journey-card">
+          <span>STEP 02 · ANALYSE</span>
+          <h3>Challenge assumptions</h3>
+          <p><strong>AI assistance:</strong> Identify questions about empty carts, invalid details, payment failures, duplicate submissions and order confirmation.</p>
+          <p><strong>Human review:</strong> Resolve business rules before treating assumptions as requirements.</p>
+        </article>
+
+        <article class="journey-card">
+          <span>STEP 03 · SPECIFY</span>
+          <h3>Make it testable</h3>
+          <p><strong>Requirement:</strong> The system must create an order only after the required checkout validations and payment outcome are successful.</p>
+          <p><strong>Acceptance criterion:</strong> Given valid checkout details and a successful payment, when the customer places the order, then one order is recorded and a confirmation is displayed.</p>
+        </article>
+
+        <article class="journey-card">
+          <span>STEP 04 · VERIFY</span>
+          <h3>Connect tests to evidence</h3>
+          <p><strong>Planned tests:</strong> Successful checkout, invalid details, declined payment and repeated submission.</p>
+          <p><strong>Evidence:</strong> Link each requirement to test results and review the actual implementation before claiming it is verified.</p>
+        </article>
+      </div>
+
+      <div class="workflow-panel" style="margin-top: 24px;">
+        <p><strong>Human accountability remains throughout.</strong> AI can propose requirements, edge cases and tests. People confirm business rules, approve scope and assess the evidence.</p>
+        <p class="workflow-note">This is an illustrative workflow, not a live checkout implementation. The example's planned tests must not be confused with executed test results.</p>
+      </div>
+    </section>
+
     <section class="section documents" id="documents">
       <p class="eyebrow">THE WORKING ARTEFACTS</p>
       <h2>Explore the documentation.</h2>
@@ -104,7 +145,6 @@
     <section class="section workflow">
       <p class="eyebrow">HUMAN + AI</p>
       <h2>AI accelerates. Evidence decides.</h2>
-
       <div class="workflow-panel">
         <p>AI can help structure requirements, identify gaps, challenge assumptions and propose tests.</p>
         <p>Human review remains essential for business decisions, risk acceptance, security review and approval of claims.</p>
