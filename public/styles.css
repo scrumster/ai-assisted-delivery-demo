@@ -239,3 +239,135 @@ footer > a:last-child {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+
+.document-explorer {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+  align-items: start;
+}
+
+#document-navigation {
+  display: grid;
+  gap: 8px;
+}
+
+.doc-nav-item {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: #172033;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.doc-nav-item:hover,
+.doc-nav-item.active {
+  border-color: var(--accent);
+  background: #f0f2ff;
+}
+
+.doc-nav-item.active {
+  color: var(--accent);
+  font-weight: 750;
+}
+
+.document-reader {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+
+#document-status {
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+#document-content h2 {
+  margin-top: 12px;
+  font-size: 30px;
+}
+
+#document-content h3,
+#document-content h4,
+#document-content h5 {
+  margin-top: 28px;
+  line-height: 1.35;
+}
+
+#document-content p,
+#document-content li {
+  overflow-wrap: anywhere;
+}
+
+#document-content li {
+  margin-bottom: 8px;
+}
+
+#document-content pre {
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f3f5f9;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#document-content code {
+  font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.document-description,
+.source-note {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.source-note {
+  margin-top: 20px;
+}
+
+.source-note a {
+  color: var(--accent);
+  font-weight: 650;
+}
+
+.table-note {
+  overflow-x: auto;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .document-explorer {
+    grid-template-columns: 1fr;
+  }
+
+  #document-navigation {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .document-reader {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  #document-navigation {
+    grid-template-columns: 1fr;
+  }
+}
