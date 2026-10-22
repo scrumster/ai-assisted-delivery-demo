@@ -23,14 +23,15 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
       - name: Copy documentation into showcase
         run: |
-          mkdir -p public/docs public/.github/workflows
+          mkdir -p public/docs
           cp requirements.md public/requirements.md
           cp docs/assumptions-and-limitations.md public/docs/
           cp docs/traceability-matrix.md public/docs/
           cp docs/security-baseline.md public/docs/
-          cp .github/workflows/ci.yml public/.github/workflows/ci.yml
+          cp .github/workflows/ci.yml public/ci-workflow.yml
 
       - name: Upload showcase
         uses: actions/upload-pages-artifact@v3

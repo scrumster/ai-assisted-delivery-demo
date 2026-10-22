@@ -1,34 +1,35 @@
+
 "use strict";
 
 const documents = [
   {
     id: "requirements",
     title: "Product requirements",
-    path: "../requirements.md",
+    path: "requirements.md",
     description: "Scope, functional requirements and acceptance criteria",
   },
   {
     id: "assumptions",
     title: "Assumptions & limitations",
-    path: "../docs/assumptions-and-limitations.md",
+    path: "docs/assumptions-and-limitations.md",
     description: "Decisions, boundaries and known risks",
   },
   {
     id: "traceability",
     title: "Traceability matrix",
-    path: "../docs/traceability-matrix.md",
+    path: "docs/traceability-matrix.md",
     description: "Requirements mapped to planned verification",
   },
   {
     id: "security",
     title: "Security baseline",
-    path: "../docs/security-baseline.md",
+    path: "docs/security-baseline.md",
     description: "Repository hygiene and recorded scan evidence",
   },
   {
     id: "ci",
     title: "CI workflow",
-    path: "../.github/workflows/ci.yml",
+    path: "ci-workflow.yml",
     description: "Automated testing workflow",
     raw: true,
   },
@@ -38,10 +39,10 @@ const content = document.querySelector("#document-content");
 const navigation = document.querySelector("#document-navigation");
 const status = document.querySelector("#document-status");
 
-function makeElement(tag, className, text) {
+function makeElement(tag, className = "", text = "") {
   const element = document.createElement(tag);
   if (className) element.className = className;
-  if (text !== undefined) element.textContent = text;
+  element.textContent = text;
   return element;
 }
 
@@ -52,6 +53,7 @@ function renderNavigation() {
     const button = makeElement("button", "doc-nav-item", doc.title);
     button.type = "button";
     button.dataset.document = doc.id;
+    button.setAttribute("aria-pressed", "false");
     button.addEventListener("click", () => openDocument(doc.id));
     navigation.append(button);
   }
@@ -60,6 +62,7 @@ function renderNavigation() {
 function renderMarkdown(markdown) {
   const fragment = document.createDocumentFragment();
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+
   let paragraph = [];
   let list = null;
   let codeLines = null;
@@ -82,10 +85,9 @@ function renderMarkdown(markdown) {
       flushParagraph();
       flushList();
 
-      if (codeLines) {
+      if (codeLines !== null) {
         const pre = makeElement("pre");
-        const code = makeElement("code", codeLanguage, codeLines.join("\n"));
-        pre.append(code);
+        pre.append(makeElement("code", codeLanguage, codeLines.join("\n")));
         fragment.append(pre);
         codeLines = null;
         codeLanguage = "";
@@ -96,7 +98,7 @@ function renderMarkdown(markdown) {
       continue;
     }
 
-    if (codeLines) {
+    if (codeLines !== null) {
       codeLines.push(line);
       continue;
     }
@@ -138,7 +140,7 @@ function renderMarkdown(markdown) {
   flushParagraph();
   flushList();
 
-  if (codeLines) {
+  if (codeLines !== null) {
     const pre = makeElement("pre");
     pre.append(makeElement("code", codeLanguage, codeLines.join("\n")));
     fragment.append(pre);
@@ -154,14 +156,14 @@ async function openDocument(id) {
   navigation.querySelectorAll("button").forEach((button) => {
     const selected = button.dataset.document === id;
     button.classList.toggle("active", selected);
-    button.setAttribute("aria-current", selected ? "page" : "false");
+    button.setAttribute("aria-pressed", String(selected));
   });
 
   content.replaceChildren(makeElement("p", "", "Loading document…"));
   status.textContent = `Loading ${doc.title}`;
 
   try {
-    const response = await fetch(doc.path);
+    const response = await fetch(doc.path, { cache: "no-store" });
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
@@ -190,15 +192,16 @@ async function openDocument(id) {
       makeElement(
         "p",
         "",
-        `The source could not be loaded (${error.message}). Please try again or open the source repository.`,
+        `The document could not be loaded (${error.message}). Please try again or open the source repository.`,
       ),
-      makeElement("a", "", "Open source repository"),
     );
 
-    const link = content.querySelector("a");
+    const link = makeElement("a", "", "Open source repository");
     link.href = "https://github.com/scrumster/ai-assisted-delivery-demo";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
+    content.append(link);
+
     status.textContent = "Document loading failed.";
   }
 }
